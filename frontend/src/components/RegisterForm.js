@@ -50,7 +50,9 @@ class RegisterForm extends Component {
   state = {
     name: '',
     email: '',
-    password: ''
+    password: '',
+    location: '',
+    description: ''
   };
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -87,12 +89,17 @@ class RegisterForm extends Component {
             />
             <label htmlFor='name'>Name</label>
             <AuthInput type='text' name='name' onChange={this.handleChange} />
+            <p> Where are you from? </p>
+            <AuthInput type='text' name='location' onChange={this.handleChange} />
+            <p> Tell the world a bit about yourself! </p>
+            <AuthInput type='text' name='description' onChange={this.handleChange} />
             <p className='gravatar'>
               Bonafind uses <strong>Gravatar</strong> for our user avatars.
               Don't have one? It's easy- sign up at{' '}
               <a href='http://gravatar.com'>http://gravatar.com</a>
             </p>
             <input type='submit' value='Register' className='btn' />
+
           </AuthForm>
         </RegisterDiv>
       </div>

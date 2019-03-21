@@ -96,18 +96,21 @@ router.get('/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const email = req.body.email;
-  const emailExists = await userModel.verifyLoginEmail(email);
-  const DoesEmailExist = emailExists.length > 0 ? true : false;
-  if (DoesEmailExist) {
-    return res.json({
-      error: 'Email Already Exists'
-    });
+  if (req.body.email){
+    const email = req.body.email;
+    const emailExists = await userModel.verifyLoginEmail(email);
+    const DoesEmailExist = emailExists.length > 0 ? true : false;
+    if (DoesEmailExist) {
+      return res.json({
+        error: 'Email Already Exists'
+      });
+    }
+    email.toLowerCase();
+    const gravatarHashedEmail = await md5(email);
+    const gravatarLink = `https://www.gravatar.com/avatar/${gravatarHashedEmail}?s=200`;
+    req.body.gravatar = gravatarLink;
   }
-  email.toLowerCase();
-  const gravatarHashedEmail = await md5(email);
-  const gravatarLink = `https://www.gravatar.com/avatar/${gravatarHashedEmail}?s=200`;
-  req.body.gravatar = gravatarLink;
+  
   await userModel.updateUser(req.params.id, req.body);
   res.json({
     message: 'Successfully updated'

@@ -35,6 +35,7 @@ class UserProfile extends React.Component {
       <div>
         <NavBar />
         <StyledContainer>
+          <Link to ='/updateuser'>Update User Profile </Link>
           <MyReviews className='header' {...this.props} id={id} />
         </StyledContainer>
       </div>
